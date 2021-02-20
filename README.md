@@ -46,6 +46,12 @@ zfs send -i datapool/storage@backup-LAST datapool/storage@backup-`date +%Y-%m-%d
 zfs send -i datapool/media@backup-LAST datapool/media@backup-`date +%Y-%m-%d` | pigz -9 -p 24 > /mnt/backup/datapool_media_diff_`date +%Y-%m-%d`.gz
 ```
 
+### Verify Zipped Backup Stream
+
+```
+pigz -dc -p 24 rpool_root_2021-02-20.gz | zstreamdump
+```
+
 <https://pavelanni.github.io/oracle_solaris_11_labs/zfs/zfs_backup/>\
 <https://docs.oracle.com/cd/E18752_01/html/819-5461/gbchx.html>
 
