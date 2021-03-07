@@ -90,6 +90,13 @@ pve-efiboot-tool refresh
 nano /etc/kernel/pve-efiboot-uuids #remove the drive that was removed
 ```
 
+## Remove efiboot disk entry
+
+```
+blkid /dev/sd?? | grep -f /etc/kernel/pve-efiboot-uuids
+nano /etc/kernel/pve-efiboot-uuids # remove desired entries
+```
+
 # Nextcloud
 
 ## Docker root Commands
