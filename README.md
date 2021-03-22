@@ -97,6 +97,34 @@ blkid /dev/sd?? | grep -f /etc/kernel/pve-efiboot-uuids
 nano /etc/kernel/pve-efiboot-uuids # remove desired entries
 ```
 
+## Fix exported pools on boot
+
+### Quick fix by using /dev/disk/by-id
+
+```
+zpool import -aN -d /dev/disk/by-id
+```
+
+### Solve by creating and linking v-devs
+
+vdev_id.conf:
+```
+# by-vdev
+
+# name fully qualified or base name of device link
+
+alias ds4243_1_slot1 /dev/disk/by-id/ata-WDC_WD120EMFZ-11A6JA0_****
+alias ds4243_1_slot2 /dev/disk/by-id/ata-WDC_WD120EMFZ-11A6JA0_****
+alias ds4243_1_slot3 /dev/disk/by-id/ata-WDC_WD120EMFZ-11A6JA0_****
+alias ds4243_1_slot4 /dev/disk/by-id/ata-WDC_WD120EMFZ-11A6JA0_****
+```
+
+```
+sudo zpool export zpool_mirror
+sudo udevadm trigger
+sudo zpool import -d /dev/disk/by-vdev/ zpool_mirror
+```
+
 # Nextcloud
 
 ## Docker root Commands
